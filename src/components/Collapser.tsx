@@ -1,9 +1,13 @@
 import React from 'react'
 import { MoreHoriz } from '@material-ui/icons'
 
-const Collapser: React.FC = () => {
+interface CollapserProps {
+    title: string
+    onClick: (e: React.MouseEvent)=> void
+}
+const Collapser: React.FC<CollapserProps> = (props) => {
 	return (
-		<li className='breadcrumb-collapser'>
+		<li className='breadcrumb-collapser' {...props}>
 			<MoreHoriz />
 		</li>
 	)

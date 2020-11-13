@@ -45,3 +45,12 @@ ol {
 .breadcrumb-collapser svg:active {
   color: #333;
 }
+a {
+  text-decoration: none;
+  font-weight: 400;
+  color: #424548;
+}
+
+a:hover {
+  color: #1da2b3;
+}

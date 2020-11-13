@@ -4,9 +4,9 @@ import Collapser from '../Collapser'
 interface BreadcrumbProps {
 	separator?: React.ReactNode
 	collapse?: {
-		itemsBefore: number
-		itemsAfter: number
-		max: number
+		itemsBefore?: number
+		itemsAfter?: number
+		max?: number
 	}
 }
 const BreadcrumbSeparator: React.FC = ({ children, ...restProps }) => (
@@ -20,6 +20,7 @@ const BreadcrumbItem: React.FC = ({ children }) => (
 	</li>
 )
 const Breadcrumb: React.FC<BreadcrumbProps> = ({ separator = '/', children, collapse = {}, ...restProps }) => {
+	const { itemsBefore = 1, itemsAfter = 1, max = 4 } = collapse
 	const { expanded, open } = useBreadcrumb()
 
 	// 对children进行处理
@@ -39,6 +40,19 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ separator = '/', children, coll
 		}
 		return pre
 	}, [])) as any
+
+
+	// 通过collapse属性来判断是否是可展开的
+	const totalItems = _children.length
+
+	if (!expanded || totalItems <= max) {
+		_children = [
+			..._children.slice(0, itemsBefore),
+			<Collapser title="Expand" onClick={open} key='collapsed-seperator'></Collapser>,
+			..._children.slice(totalItems - itemsAfter, totalItems)
+		]
+	}
+	console.log(expanded, _children)
 	return (
 		<ol {...restProps}>
 			{_children}
